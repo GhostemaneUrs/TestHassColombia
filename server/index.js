@@ -2,7 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const mysql = require("mysql");
+const cors = require("cors");
 dotenv.config({ path: "./.env" });
+
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -18,6 +24,8 @@ db.connect(function (error) {
     console.log("Tu conexion es exitosa!");
   }
 });
+
+app.use("/user", require("./src/routes/user"));
 
 //Port de la app
 const PORT = process.env.PORT || 9000;
