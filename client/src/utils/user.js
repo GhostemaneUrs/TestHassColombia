@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 const route = "http://localhost:9000/user/";
 
-export const logIn = async (user, setUser) => {
+export const logIn = async (user, setUser, setLoginStatus) => {
   await axios
     .post(route + "login", user)
     .then((res) => {
@@ -11,6 +11,7 @@ export const logIn = async (user, setUser) => {
         email: "",
         password: "",
       });
+      setLoginStatus(true);
     })
     .catch((err) => {
       Swal.fire({

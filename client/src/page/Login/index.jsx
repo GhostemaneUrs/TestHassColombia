@@ -1,14 +1,12 @@
-import "./styles.scss";
 import React, { useState, useEffect } from "react";
 import welcome from "../../assets/img/welcome.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logIn } from "../../utils/user";
-import Message from "../../components/Message/Message";
-import { useNavigate } from "react-router-dom";
+import Message from "../../components/Message";
 
-const Login = () => {
+const Login = ({ loginStatus, setLoginStatus }) => {
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -16,8 +14,9 @@ const Login = () => {
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
-    if (user.email !== "" || user.password !== "") {
-      logIn(user, setUser);
+    if (user.email !== "" || user.password !== "" || loginStatus === true) {
+      logIn(user, setUser, setLoginStatus);
+      navigate("/products");
     } else {
       setError("All fields are required!");
       setTimeout(() => {
@@ -29,7 +28,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container-1400 h-screen m-auto flex justify-center items-center">
+    <div className="container-1400 h-screen m-auto flex justify-center items-center gap-10">
       <div className="lg:w-2/5 hidden lg:block">
         <img src={welcome} alt="welcome-img" />
       </div>

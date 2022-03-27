@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import register from "../../assets/img/register.svg";
 import { signUp } from "../../utils/user";
-import Message from "../../components/Message/Message";
+import Message from "../../components/Message";
 const Register = () => {
   const [newUser, setNewUser] = useState({
     name: "",
