@@ -48,6 +48,7 @@ db.connect(function (error) {
 });
 
 app.use("/user", require("./src/routes/user"));
+app.use("/receipt", require("./src/routes/receipt"));
 
 //Port de la app
 const PORT = process.env.PORT || 9000;
