@@ -1,12 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import register from "../../assets/img/register.svg";
+import { signUp } from "../../utils/user";
+import Message from "../../components/Message/Message";
 const Register = () => {
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+
+  const onSubmitRegister = (e) => {
+    e.preventDefault();
+    if (
+      newUser.name !== "" ||
+      newUser.email !== "" ||
+      newUser.password !== ""
+    ) {
+      signUp(newUser, setNewUser);
+    } else {
+      setError("All fields are required!");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+    setError("");
+  };
   return (
     <div className="container-1400 h-screen m-auto flex justify-center items-center">
       <div className="lg:w-2/5 hidden lg:block">
@@ -18,9 +39,14 @@ const Register = () => {
             <p className="font-medium text-lg text-gray-600">Sign Up!</p>
           </div>
 
+          {error && <Message type="error"> {error} </Message>}
           <div role="hidden" className="mt-12 border-t" />
 
-          <form action="" className="space-y-6 py-6">
+          <form
+            action=""
+            onSubmit={onSubmitRegister}
+            className="space-y-6 py-6"
+          >
             <div className="space-y-6">
               <input
                 type="text"

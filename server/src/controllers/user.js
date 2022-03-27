@@ -1,6 +1,8 @@
 const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
 
+
+
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -60,7 +62,6 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   data = req.body;
   const { email, password } = data;
-  console.log(data);
   const sqlLogin = "SELECT password FROM login WHERE email = ?";
 
   if (email === "" || password === "") {
@@ -81,6 +82,8 @@ exports.login = (req, res) => {
           });
         } else {
           if (result) {
+            req.session.user = result
+            console.log(req.session.user)
             res.status(200).send({
               message: "Login successful",
             });

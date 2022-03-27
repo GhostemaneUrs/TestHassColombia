@@ -1,9 +1,33 @@
 import "./styles.scss";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import welcome from "../../assets/img/welcome.svg";
 import { Link } from "react-router-dom";
+import { logIn } from "../../utils/user";
+import Message from "../../components/Message/Message";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    if (user.email !== "" || user.password !== "") {
+      logIn(user, setUser);
+    } else {
+      setError("All fields are required!");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+    setError("");
+  };
+
   return (
     <div className="container-1400 h-screen m-auto flex justify-center items-center">
       <div className="lg:w-2/5 hidden lg:block">
@@ -17,13 +41,16 @@ const Login = () => {
             </p>
           </div>
 
+          {error && <Message type="error"> {error} </Message>}
           <div role="hidden" className="mt-12 border-t" />
 
-          <form action="" className="space-y-6 py-6">
+          <form onSubmit={onSubmitLogin} className="space-y-6 py-6">
             <div>
               <input
                 type="email"
                 placeholder="Your Email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
                 className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
               />
             </div>
@@ -32,12 +59,17 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Your Password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
               />
             </div>
 
             <div>
-              <button className="w-full px-6 py-3 rounded-xl bg-indigo-600 transition hover:bg-indigo-700 mb-5">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 rounded-xl bg-indigo-600 transition hover:bg-indigo-700 mb-5"
+              >
                 <span className="font-semibold text-white text-lg">Login</span>
               </button>
               <Link to="/register">

@@ -3,6 +3,15 @@
 @import "tailwindcss/utilities";
 @import "sweetalert2/src/sweetalert2.scss";
 
+:root {
+  --color-blue: #3b82f6;
+  --color-white: #fff;
+  --color-gray: #94a3b8;
+  --color-gray-light: #f5f5f5;
+  --color-gray-dark: #64748b;
+  --color-black: #000;
+}
+
 @font-face {
   font-family: "Montserrat";
   src: url("./../assets/fonts/Montserrat/Montserrat-Regular.ttf")
@@ -29,4 +38,20 @@ code {
   margin: auto;
   padding: 1rem;
   max-width: 1400px;
+}
+
+.alerta {
+  padding: 1rem;
+  max-width: 60rem;
+  font-weight: 900;
+  font-size: 1.2rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 1rem auto 1rem auto;
+}
+
+.alerta.error {
+  color: #b91c1c;
+  border-left: 5px solid #b91c1c;
+  background-color: var(--color-white);
 }
