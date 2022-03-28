@@ -47,17 +47,18 @@ exports.deleteReceipt = (req, res) => {
 exports.createReceipt = (req, res) => {
   data = req.body;
   const {
-    titular,
-    peso,
-    fecha_creacion,
-    precio,
-    precio_unidad,
-    creado_por,
-    direccion,
+    status,
+    owner,
+    weight,
+    creationDate,
+    price,
+    unitPrice,
+    createBy,
+    direction,
   } = data;
   const sqlCreateReceipt =
-    "INSERT INTO productos (titular, peso, fecha_creacion, precio, precio_unidad, creado_por, direccion, state) VALUES (?,?,?,?,?,?,?,?);";
-  if (titular === "" || peso === "" || fecha_creacion === "" || precio === "") {
+    "INSERT INTO productos (estado, titular, peso, fecha_creacion, precio, precio_unidad, creado_por, direccion, state) VALUES (?,?,?,?,?,?,?,?,?);";
+  if (status === "" || owner === "" || creationDate === "" || price === "") {
     res.status(400).send({
       message: "All fields are required",
     });
@@ -65,13 +66,14 @@ exports.createReceipt = (req, res) => {
     db.query(
       sqlCreateReceipt,
       [
-        titular,
-        peso,
-        fecha_creacion,
-        precio,
-        precio_unidad,
-        creado_por,
-        direccion,
+        status,
+        owner,
+        weight,
+        creationDate,
+        price,
+        unitPrice,
+        createBy,
+        direction,
         1,
       ],
       (err, result) => {
@@ -110,7 +112,7 @@ exports.editReceipt = (req, res) => {
   } = data;
   const sqlEditReceipt =
     "UPDATE productos SET titular = ?, peso = ?, fecha_creacion = ?, precio = ?, precio_unidad = ?, creado_por = ?, direccion = ? WHERE idProductos = ?;";
-  if (idProductos && titular && peso && fecha_creacion && precio) {
+  if (idProductos && titular && fecha_creacion && precio) {
     db.query(
       sqlEditReceipt,
       [
@@ -128,7 +130,6 @@ exports.editReceipt = (req, res) => {
           res.status(200).send({
             message: "Receipt edited successfully",
           });
-          console.log(result);
         } else {
           res.status(400).send({
             message: "Error editing receipt",
