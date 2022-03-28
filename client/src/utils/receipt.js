@@ -54,8 +54,9 @@ export const listReceipts = async (saveReceipts) => {
 };
 
 export const deleteRecet = async (id) => {
+  console.log("id", id);
   return await axios
-    .delete(route + "delete", { idProductos: id })
+    .delete(route + "delete/" + id)
     .then((res) => {
       Swal.fire({
         icon: "success",

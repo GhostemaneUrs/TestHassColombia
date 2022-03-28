@@ -21,8 +21,7 @@ exports.getReceipts = (req, res) => {
 };
 
 exports.deleteReceipt = (req, res) => {
-  data = req.body;
-  const { idProductos } = data;
+  const idProductos = req.params.idProductos;
   const sqlDeleteReceipt =
     "UPDATE productos SET state = 0 WHERE idProductos = ?;";
   if (idProductos) {
