@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import register from "../../assets/img/register.svg";
 import { signUp } from "../../utils/user";
 import Message from "../../components/Message";
+
 const Register = () => {
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -19,6 +21,9 @@ const Register = () => {
       newUser.password !== ""
     ) {
       signUp(newUser, setNewUser);
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
     } else {
       setError("All fields are required!");
       setTimeout(() => {
