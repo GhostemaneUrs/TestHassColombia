@@ -7,7 +7,6 @@ export const logIn = async (user, setUser, setLoginStatus) => {
     .post(route + "login", user)
     .then((res) => {
       setUser({
-        name: "",
         email: "",
         password: "",
       });
