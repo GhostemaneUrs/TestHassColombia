@@ -74,12 +74,6 @@ export const editReceipt = async (receipt, saveReceipts) => {
         .get(route + "get")
         .then((res) => {
           saveReceipts(res.data);
-          Swal.fire({
-            icon: "success",
-            text: "Successful edit",
-            showConfirmButton: false,
-            timer: 1500,
-          });
         })
         .catch((err) => {
           if (err.response.status === 400) {

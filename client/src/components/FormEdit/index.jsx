@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { editReceipt } from "../../utils/receipt";
 import Message from "../Message";
+import Swal from "sweetalert2";
 const FormEditProducts = ({ update, setUpdate, saveReceipts }) => {
   const [error, setError] = useState("");
 
@@ -21,9 +22,17 @@ const FormEditProducts = ({ update, setUpdate, saveReceipts }) => {
       update.fecha_creacion !== "" &&
       update.precio !== ""
     ) {
+      Swal.fire({
+        icon: "success",
+        text: "Successful edit",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       editReceipt(update, saveReceipts);
       setUpdate(false);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       setError("All fields are required!");
       setTimeout(() => {
