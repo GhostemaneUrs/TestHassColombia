@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import { addReceipt } from "../../utils/receipt";
+import { editReceipt } from "../../utils/receipt";
 import Message from "../Message";
-const FormProducts = ({ saveReceipts }) => {
-  const [newProduct, setNewProduct] = useState({
-    status: "",
-    owner: "",
-    weight: "",
-    creationDate: "",
-    price: "",
-    unitPrice: "",
-    createBy: "",
-    direction: "",
-  });
-
+const FormEditProducts = ({ update, setUpdate, saveReceipts }) => {
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const {
+    titular,
+    peso,
+    fecha_creacion,
+    precio,
+    precio_unidad,
+    creado_por,
+    direccion,
+  } = update;
+
+  const handleSubmitEdit = (e) => {
     e.preventDefault();
     if (
-      newProduct.owner !== "" &&
-      newProduct.creationDate !== "" &&
-      newProduct.price !== ""
+      update.titular !== "" &&
+      update.fecha_creacion !== "" &&
+      update.precio !== ""
     ) {
-      addReceipt(newProduct, saveReceipts, setNewProduct);
+      editReceipt(update, saveReceipts);
+      setUpdate(false);
+      window.location.reload();
     } else {
       setError("All fields are required!");
       setTimeout(() => {
@@ -37,35 +38,17 @@ const FormProducts = ({ saveReceipts }) => {
     <div className="md:w-1/2 lg:w-3/5 xl:w-2/5 mx-5 mb-5">
       <h1 className="font-black text-center text-3xl mb-1">Receipt Tracking</h1>
 
-      <p className="text-lg text-center mb-1">
-        Add receipts and {""}
+      <p className="text-lg text-center mb-5">
+        Edit receipts and {""}
         <span className="text-indigo-600 font-bold">Manage Them</span>
       </p>
 
       {error && <Message type="error"> {error} </Message>}
       <form
         className="bg-white shadow-md rounded-xl py-10 px-5"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitEdit}
       >
-        <div className="mb-1">
-          <label
-            htmlFor="mascota"
-            className="block text-gray-700 uppercase font-bold"
-          >
-            Status
-          </label>
-          <input
-            id="owner"
-            type="text"
-            className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
-            placeholder="Status"
-            value={newProduct.status}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, status: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="mascota"
             className="block text-gray-700 uppercase font-bold"
@@ -77,13 +60,11 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
             placeholder="Name owner"
-            value={newProduct.owner}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, owner: e.target.value })
-            }
+            value={titular}
+            onChange={(e) => setUpdate({ ...update, titular: e.target.value })}
           />
         </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="weight"
             className="block text-gray-700 uppercase font-bold"
@@ -95,13 +76,11 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
             placeholder="Weight"
-            value={newProduct.weight}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, weight: e.target.value })
-            }
+            value={peso}
+            onChange={(e) => setUpdate({ ...update, peso: e.target.value })}
           />
         </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="creationDate"
             className="block text-gray-700 uppercase font-bold"
@@ -113,13 +92,13 @@ const FormProducts = ({ saveReceipts }) => {
             type="date"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
             placeholder="Creation Date"
-            value={newProduct.creationDate}
+            value={fecha_creacion}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, creationDate: e.target.value })
+              setUpdate({ ...update, fecha_creacion: e.target.value })
             }
           />
         </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="price"
             className="block text-gray-700 uppercase font-bold"
@@ -131,13 +110,11 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
             placeholder="Price"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, price: e.target.value })
-            }
+            value={precio}
+            onChange={(e) => setUpdate({ ...update, precio: e.target.value })}
           />
         </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="unitPrice"
             className="block text-gray-700 uppercase font-bold"
@@ -149,13 +126,13 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             placeholder="Unit Price"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
-            value={newProduct.unitPrice}
+            value={precio_unidad}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, unitPrice: e.target.value })
+              setUpdate({ ...update, precio_unidad: e.target.value })
             }
           />
         </div>
-        <div className="mb-1">
+        <div className="mb-3">
           <label
             htmlFor="createBy"
             className="block text-gray-700 uppercase font-bold"
@@ -167,13 +144,13 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             placeholder="Create By"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
-            value={newProduct.createBy}
+            value={creado_por}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, createBy: e.target.value })
+              setUpdate({ ...update, creado_por: e.target.value })
             }
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-5">
           <label
             htmlFor="direction"
             className="block text-gray-700 uppercase font-bold"
@@ -185,20 +162,20 @@ const FormProducts = ({ saveReceipts }) => {
             type="text"
             placeholder="Direction"
             className="border-2 w-full p-2 mt-2 placeholder:placeholder-gray-400 rounded-md"
-            value={newProduct.direction}
+            value={direccion}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, direction: e.target.value })
+              setUpdate({ ...update, direccion: e.target.value })
             }
           />
         </div>
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all"
-          value={"Add Receipt"}
+          value={"Edit Receipt"}
         />
       </form>
     </div>
   );
 };
 
-export default FormProducts;
+export default FormEditProducts;
